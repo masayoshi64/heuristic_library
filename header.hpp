@@ -21,6 +21,13 @@ struct Timer {
     }
 };
 
+long long xor64(long long range) {
+    static uint64_t x = 88172645463325252ULL;
+    x ^= x << 13;
+    x ^= x >> 7;
+    return (x ^= x << 17) % range;
+}
+
 bool time_check() {
     static Timer timer;
     if (timer.lap() > 1800)
@@ -29,6 +36,14 @@ bool time_check() {
 }
 
 struct State{
-    vector<State> next_states(){}   
-    bool operator<(const State &rhs) const {}
+    // for annealing
+    double score;
+    double get_new_score(){}  
+    void step(){} // 実際の更新
+
+    // for beam search
+    vector<State> next_states(){}  
+    bool operator<(const State &rhs) const {
+        return score < rhs.score;
+    }
 };
