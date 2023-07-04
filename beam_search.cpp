@@ -10,7 +10,7 @@ State chokudai_search(State initial_state, int max_turn){
                 if(beam[t].empty()) break;
                 State state = beam[t].top();
                 beam[t].pop();
-                for(auto next_state: state.next_states()){
+                for(auto next_state: state.get_next_states()){
                     beam[t+1].push(next_state);
                 }
             }
@@ -23,7 +23,7 @@ State chokudai_search(State initial_state, int max_turn){
 State greedy_search(State initial_state, int max_turn){
     State state = initial_state;
     rep(t, max_turn){
-        auto next_states = state.next_states();
+        auto next_states = state.get_next_states();
         state = *max_element(all(next_states));
     }
     return state;
@@ -37,7 +37,7 @@ State beam_search(State initial_state, int max_turn, int beam_width){
         int size = beam.size();
         rep(i, min(beam_width, size)){
             State state = beam[i];
-            for(auto next_state: state.next_states()){
+            for(auto next_state: state.get_next_states()){
                 next_beam.push_back(next_state);
             }
         }

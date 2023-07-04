@@ -42,7 +42,7 @@ struct State{
     void step(){} // 実際の更新
 
     // for beam search
-    vector<State> next_states(){}  
+    vector<State> get_next_states(){}  
     bool operator<(const State &rhs) const {
         return score < rhs.score;
     }
